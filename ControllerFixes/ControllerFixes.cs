@@ -6,9 +6,9 @@ namespace ControllerFixes;
 public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenuMod
 {
     internal static ControllerFixes Instance;
-    public static GlobalSettings settings { get; private set; } = new ();
-    public void OnLoadGlobal(GlobalSettings s) => settings = s;
-    public GlobalSettings OnSaveGlobal() => settings;
+    public static GlobalSettings Settings { get; private set; } = new ();
+    public void OnLoadGlobal(GlobalSettings s) => Settings = s;
+    public GlobalSettings OnSaveGlobal() => Settings;
     
     public ControllerFixes() : base("Controller Fixes")
 	{
@@ -17,7 +17,7 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
         InputManager.Reload();
     }
 
-	public override string GetVersion() => "1.0.3.0";
+	public override string GetVersion() => "1.0.4.0";
 
     public override void Initialize()
     {
@@ -42,7 +42,7 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 	    //get value of original conditions
 	    var canCast = orig(self);
 
-	    if (settings.NoCast)
+	    if (Settings.NoCast)
 	    {
 		    canCast = canCast && !InputHandler.Instance.inputActions.cast.WasReleased;
 	    }
@@ -69,9 +69,9 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 		    controllerDetect.remapButton.gameObject.SetActive(true);
 		    
 		    //added code
-		    if (settings.ButtonSkinType >= 0)
+		    if (Settings.ButtonSkinType >= 0)
 		    {
-			    controllerDetect.ShowController(settings.ButtonSkinType switch
+			    controllerDetect.ShowController(Settings.ButtonSkinType switch
 			    {
 				    0 => GamepadType.SWITCH_JOYCON_DUAL,
 				    1 or 2 => GamepadType.PS4,
@@ -108,141 +108,141 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 	        (buttonSkin, _uIButtonSkins, inputControlType) =>
 	        {
 		        var uIButtonSkins = _uIButtonSkins.Reflect();
-		        if (settings.ButtonSkinType >= 0)
+		        if (Settings.ButtonSkinType >= 0)
 		        {
-			        int buttonSkinType = settings.ButtonSkinType;
+			        int buttonSkinType = Settings.ButtonSkinType;
 			        int num = (buttonSkinType != 0) ? ((buttonSkinType > 3) ? 2 : 1) : 0;
 			        switch (inputControlType)
 			        {
 				        case InputControlType.DPadUp:
 				        {
-					        Sprite[] array = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidDPadUp,
+					        Sprite[] array =
+                            [
+                                uIButtonSkins.switchHidDPadUp,
 						        uIButtonSkins.dpadUp,
 						        uIButtonSkins.dpadUp,
-					        };
+					        ];
 					        buttonSkin.sprite = array[num];
 					        break;
 				        }
 				        case InputControlType.DPadDown:
 				        {
-					        Sprite[] array2 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidDPadDown,
+					        Sprite[] array2 =
+                            [
+                                uIButtonSkins.switchHidDPadDown,
 						        uIButtonSkins.dpadDown,
 						        uIButtonSkins.dpadDown,
-					        };
+					        ];
 					        buttonSkin.sprite = array2[num];
 					        break;
 				        }
 				        case InputControlType.DPadLeft:
 				        {
-					        Sprite[] array3 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidDPadLeft,
+					        Sprite[] array3 =
+                            [
+                                uIButtonSkins.switchHidDPadLeft,
 						        uIButtonSkins.dpadLeft,
 						        uIButtonSkins.dpadLeft,
-					        };
+					        ];
 					        buttonSkin.sprite = array3[num];
 					        break;
 				        }
 				        case InputControlType.DPadRight:
 				        {
-					        Sprite[] array4 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidDPadRight,
+					        Sprite[] array4 =
+                            [
+                                uIButtonSkins.switchHidDPadRight,
 						        uIButtonSkins.dpadRight,
 						        uIButtonSkins.dpadRight,
-					        };
+					        ];
 					        buttonSkin.sprite = array4[num];
 					        break;
 				        }
 				        case InputControlType.LeftTrigger:
 				        {
-					        Sprite[] array5 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidLeftTrigger,
+					        Sprite[] array5 =
+                            [
+                                uIButtonSkins.switchHidLeftTrigger,
 						        uIButtonSkins.ps4lt,
 						        uIButtonSkins.lt,
-					        };
+					        ];
 					        buttonSkin.sprite = array5[num];
 					        break;
 				        }
 				        case InputControlType.RightTrigger:
 				        {
-					        Sprite[] array6 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidRightTrigger,
+					        Sprite[] array6 =
+                            [
+                                uIButtonSkins.switchHidRightTrigger,
 						        uIButtonSkins.ps4rt,
 						        uIButtonSkins.rt,
-					        };
+					        ];
 					        buttonSkin.sprite = array6[num];
 					        break;
 				        }
 				        case InputControlType.LeftBumper:
 				        {
-					        Sprite[] array7 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidLeftBumper,
+					        Sprite[] array7 =
+                            [
+                                uIButtonSkins.switchHidLeftBumper,
 						        uIButtonSkins.ps4lb,
 						        uIButtonSkins.lb,
-					        };
+					        ];
 					        buttonSkin.sprite = array7[num];
 					        break;
 				        }
 				        case InputControlType.RightBumper:
 				        {
-					        Sprite[] array8 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidRightBumper,
+					        Sprite[] array8 =
+                            [
+                                uIButtonSkins.switchHidRightBumper,
 						        uIButtonSkins.ps4rb,
 						        uIButtonSkins.rb,
-					        };
+					        ];
 					        buttonSkin.sprite = array8[num];
 					        break;
 				        }
 				        case InputControlType.Action1:
 				        {
-					        Sprite[] array9 = new Sprite[]
-					        {
-						        settings.SteamNintendoLayout ? uIButtonSkins.switchHidA : uIButtonSkins.switchHidB,
+					        Sprite[] array9 =
+                            [
+                                Settings.SteamNintendoLayout ? uIButtonSkins.switchHidA : uIButtonSkins.switchHidB,
 						        uIButtonSkins.ps4x,
 						        uIButtonSkins.a,
-					        };
+					        ];
 					        buttonSkin.sprite = array9[num];
 					        break;
 				        }
 				        case InputControlType.Action2:
 				        {
-					        Sprite[] array10 = new Sprite[]
-					        {
-						        settings.SteamNintendoLayout ? uIButtonSkins.switchHidB : uIButtonSkins.switchHidA,
+					        Sprite[] array10 =
+                            [
+                                Settings.SteamNintendoLayout ? uIButtonSkins.switchHidB : uIButtonSkins.switchHidA,
 						        uIButtonSkins.ps4circle,
 						        uIButtonSkins.b,
-					        };
+					        ];
 					        buttonSkin.sprite = array10[num];
 					        break;
 				        }
 				        case InputControlType.Action3:
 				        {
-					        Sprite[] array11 = new Sprite[]
-					        {
-						        settings.SteamNintendoLayout ? uIButtonSkins.switchHidX : uIButtonSkins.switchHidY,
+					        Sprite[] array11 =
+                            [
+                                Settings.SteamNintendoLayout ? uIButtonSkins.switchHidX : uIButtonSkins.switchHidY,
 						        uIButtonSkins.ps4square,
 						        uIButtonSkins.x,
-					        };
+					        ];
 					        buttonSkin.sprite = array11[num];
 					        break;
 				        }
 				        case InputControlType.Action4:
 				        {
-					        Sprite[] array12 = new Sprite[]
-					        {
-						        settings.SteamNintendoLayout ? uIButtonSkins.switchHidY : uIButtonSkins.switchHidX,
+					        Sprite[] array12 =
+                            [
+                                Settings.SteamNintendoLayout ? uIButtonSkins.switchHidY : uIButtonSkins.switchHidX,
 						        uIButtonSkins.ps4triangle,
 						        uIButtonSkins.y,
-					        };
+					        ];
 					        buttonSkin.sprite = array12[num];
 					        break;
 				        }
@@ -259,15 +259,15 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 						        case InputControlType.Options:
 						        case InputControlType.Menu:
 						        {
-							        Sprite[] array13 = new Sprite[]
-							        {
-								        uIButtonSkins.switchHidPlus,
+							        Sprite[] array13 =
+                                    [
+                                        uIButtonSkins.switchHidPlus,
 								        uIButtonSkins.options,
 								        uIButtonSkins.options,
 								        uIButtonSkins.start,
 								        uIButtonSkins.menu,
 								        uIButtonSkins.start,
-							        };
+							        ];
 							        buttonSkin.sprite = array13[buttonSkinType];
 							        return buttonSkin;
 						        }
@@ -284,15 +284,15 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 							        break;
 					        }
 
-					        Sprite[] array14 = new Sprite[]
-					        {
-						        uIButtonSkins.switchHidMinus,
+					        Sprite[] array14 =
+                            [
+                                uIButtonSkins.switchHidMinus,
 						        uIButtonSkins.touchpadButton,
 						        uIButtonSkins.share,
 						        uIButtonSkins.select,
 						        uIButtonSkins.view,
 						        uIButtonSkins.select,
-					        };
+					        ];
 					        buttonSkin.sprite = array14[buttonSkinType];
 					        break;
 				        }
@@ -321,7 +321,7 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
         //get the original return value and the value of first argument and replace the bool with my conditions
         cursor.EmitDelegate<Func<bool, InputDevice, bool>>((oldvalue, inputDevice) =>
         {
-            if (settings.EmulatedXboxOnly && !inputDevice.Name.Equals("XInput Controller") &&
+            if (Settings.EmulatedXboxOnly && !inputDevice.Name.Equals("XInput Controller") &&
                 !inputDevice.Name.Equals("Xbox 360 Controller") && !inputDevice.Name.Equals("XBox 360 Controller") &&
                 !inputDevice.Name.Equals("Microsoft Xbox 360 Controller"))
             {
@@ -342,7 +342,7 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 	// Override mappings in the controller menu based on the Steam Nintendo layout setting
     private void ShowCurrentBinding(On.ControllerButtonLabel.orig_ShowCurrentBinding orig, ControllerButtonLabel self)
     {
-		if (self.transform.parent.name is not "SwitchJoyconButtons" || !settings.SteamNintendoLayout)
+		if (self.transform.parent.name is not "SwitchJoyconButtons" || !Settings.SteamNintendoLayout)
 		{
 			orig(self);
 			return;
@@ -366,7 +366,7 @@ public class ControllerFixes : Mod, IGlobalSettings<GlobalSettings>, ICustomMenu
 
     private void OverrideMenuPrompts(On.ActionButtonIconBase.orig_GetButtonIcon orig, ActionButtonIconBase self, HeroActionButton actionButton)
     {
-		if (self is MenuButtonIcon && settings.OverrideMenuPrompts)
+		if (self is MenuButtonIcon && Settings.OverrideMenuPrompts)
 		{
 			switch (actionButton) 
 			{
